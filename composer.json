@@ -12,6 +12,7 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
+        "yiismart/yii2-base": "*"
     },
     "autoload": {
         "psr-4": {
