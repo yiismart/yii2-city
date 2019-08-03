@@ -7,6 +7,18 @@ use creocoder\nestedsets\NestedSetsQueryBehavior;
 
 class City extends ActiveRecord
 {
+    // Type
+    const REGION = 0;
+    const CITY = 1;
+
+    /**
+     * @var array taye names
+     */
+    private static $typeNames = [
+        self::REGION => 'Region',
+        self::CITY => 'City',
+    ];
+
     /**
      * @inheritdoc
      * Default values
