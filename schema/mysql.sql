@@ -6,7 +6,7 @@ create table if not exists `city`
     `depth` int(10) not null,
     `type` int(10) not null,
     `active` tinyint(1) default 1,
-    `name` varchar(100) default null,
+    `name` varchar(100) not null,
     `url` varchar(100) default null,
     primary key (`id`)
 ) engine InnoDB;

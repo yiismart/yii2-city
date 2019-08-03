@@ -1,9 +1,12 @@
 <?php
 namespace smart\city\models;
 
+use Yii;
+use yii\db\ActiveQuery;
 use smart\db\ActiveRecord;
 use creocoder\nestedsets\NestedSetsBehavior;
 use creocoder\nestedsets\NestedSetsQueryBehavior;
+use dkhlystov\helpers\Translit;
 
 class City extends ActiveRecord
 {
@@ -18,6 +21,43 @@ class City extends ActiveRecord
         self::REGION => 'Region',
         self::CITY => 'City',
     ];
+
+    /**
+     * @var array translated type names
+     */
+    private static $_typeNames;
+
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'city';
+    }
+
+    /**
+     * Types getter
+     * @return array
+     */
+    public static function getTypes()
+    {
+        return array_keys(self::$typeNames);
+    }
+
+    /**
+     * Type names getter
+     * @return array
+     */
+    public static function getTypeNames()
+    {
+        if (self::$_typeNames !== null) {
+            return self::$_typeNames;
+        }
+
+        return self::$_typeNames = array_map(function($v) {
+            return Yii::t('city', $v);
+        }, self::$typeNames);
+    }
 
     /**
      * @inheritdoc
@@ -48,6 +88,26 @@ class City extends ActiveRecord
     public static function find()
     {
         return new CityQuery(get_called_class());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        // Url
+        if (empty($this->url)) {
+            $this->makeUrl();
+            $this->update(false, ['url']);
+        }
+    }
+
+    /**
+     * Make friendly url form name
+     */
+    public function makeUrl()
+    {
+        $this->url = Translit::t($this->name);
     }
 }
 
