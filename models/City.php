@@ -100,11 +100,8 @@ class City extends ActiveRecord
         }
 
         // Friendly Url
-        if ($insert) {
+        if ($insert || $this->isAttributeChanged('name')) {
             $this->makeAlias();
-        } else {
-            var_dump($insert); die();
-
         }
 
         return true;
