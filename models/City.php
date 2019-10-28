@@ -15,7 +15,7 @@ class City extends ActiveRecord
     const CITY = 1;
 
     /**
-     * @var array taye names
+     * @var array type names
      */
     private static $typeNames = [
         self::REGION => 'Region',
@@ -93,21 +93,29 @@ class City extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function afterSave($insert, $changedAttributes)
+    public function beforeSave($insert)
     {
-        // Url
-        if (empty($this->url)) {
-            $this->makeUrl();
-            $this->update(false, ['url']);
+        if (!parent::beforeSave($insert)) {
+            return false;
         }
+
+        // Friendly Url
+        if ($insert) {
+            $this->makeAlias();
+        } else {
+            var_dump($insert); die();
+
+        }
+
+        return true;
     }
 
     /**
      * Make friendly url form name
      */
-    public function makeUrl()
+    public function makeAlias()
     {
-        $this->url = Translit::t($this->name);
+        $this->alias = Translit::t($this->name);
     }
 }
 

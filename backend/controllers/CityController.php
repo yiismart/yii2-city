@@ -160,7 +160,7 @@ class CityController extends BackendController
      * @param string $s
      * @return string
      */
-    public function actionMakeUrl($s)
+    public function actionMakeAlias($s)
     {
         return Json::encode(Translit::t($s));
     }

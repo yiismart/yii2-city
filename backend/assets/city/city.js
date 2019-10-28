@@ -1,9 +1,9 @@
 var city = {
     init: function() {
-        $('#make-url').on('click', this.make_url);
+        $('#make-alias').on('click', this.make_alias);
     },
-    make_url: function() {
-        var $button = $(this), $input = $('#cityform-url');
+    make_alias: function() {
+        var $button = $(this), $input = $('#cityform-alias');
         if ($input.hasClass('state-loading')) {
             return;
         }
