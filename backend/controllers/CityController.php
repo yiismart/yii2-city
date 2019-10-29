@@ -2,9 +2,7 @@
 namespace smart\city\backend\controllers;
 
 use Yii;
-use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
-use dkhlystov\helpers\Translit;
 use smart\base\BackendController;
 use smart\city\backend\filters\CityFilter;
 use smart\city\backend\forms\CityForm;
@@ -153,15 +151,5 @@ class CityController extends BackendController
                 $object->insertAfter($t);
                 break;
         }
-    }
-
-    /**
-     * Make friendly URL
-     * @param string $s
-     * @return string
-     */
-    public function actionMakeAlias($s)
-    {
-        return Json::encode(Translit::t($s));
     }
 }
